@@ -1,0 +1,424 @@
+{
+    "ankelHeight": 0.0,
+    "ankelOrder": {
+        "axis1": 1,
+        "axis2": 0,
+        "axis3": 2
+    },
+    "headOrder": {
+        "axis1": 2,
+        "axis2": 0,
+        "axis3": 1
+    },
+    "hipOrder": {
+        "axis1": 2,
+        "axis2": 1,
+        "axis3": 0
+    },
+    "lowerBodyHeight": 0.0,
+    "lowerBodyMode": 0,
+    "lowerLegLength": 0.0,
+    "retargetJoints": [
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 5.099999904632568,
+            "min": -6.283199787139893,
+            "offset": 90.0,
+            "rawJoint": 9,
+            "retargetJoint": "r-j3",
+            "sign": 1
+        },
+        {
+            "max": 0.5235000252723694,
+            "maxSpeed": 5.099999904632568,
+            "min": -2.5306999683380127,
+            "offset": 0.0,
+            "rawJoint": 10,
+            "retargetJoint": "r-j4",
+            "sign": -1
+        },
+        {
+            "max": 1.8324999809265137,
+            "maxSpeed": 2.099999904632568,
+            "min": -1.8324999809265137,
+            "offset": 0.0,
+            "rawJoint": 12,
+            "retargetJoint": "r-j6",
+            "sign": 1
+        },
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 2.099999904632568,
+            "min": -6.283199787139893,
+            "offset": 90.0,
+            "rawJoint": 11,
+            "retargetJoint": "r-j5",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 52,
+            "retargetJoint": "R_index_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 53,
+            "retargetJoint": "R_index_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 55,
+            "retargetJoint": "R_middle_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 56,
+            "retargetJoint": "R_middle_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 58,
+            "retargetJoint": "R_ring_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 59,
+            "retargetJoint": "R_ring_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 61,
+            "retargetJoint": "R_pinky_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 62,
+            "retargetJoint": "R_pinky_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.0,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 50,
+            "retargetJoint": "R_thumb_PIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 0.699999988079071,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 51,
+            "retargetJoint": "R_thumb_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.5,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.20000000298023224,
+            "offset": -60.0,
+            "rawJoint": 48,
+            "retargetJoint": "R_thumb_MCP_joint1",
+            "sign": 1
+        },
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 5.099999904632568,
+            "min": -6.283199787139893,
+            "offset": 0.0,
+            "rawJoint": 0,
+            "retargetJoint": "l-j1",
+            "sign": 1
+        },
+        {
+            "max": 1.8324999809265137,
+            "maxSpeed": 5.099999904632568,
+            "min": -1.8324999809265137,
+            "offset": -90.0,
+            "rawJoint": 1,
+            "retargetJoint": "l-j2",
+            "sign": 1
+        },
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 5.099999904632568,
+            "min": -6.283199787139893,
+            "offset": -90.0,
+            "rawJoint": 2,
+            "retargetJoint": "l-j3",
+            "sign": 1
+        },
+        {
+            "max": 0.5235000252723694,
+            "maxSpeed": 5.099999904632568,
+            "min": -2.5306999683380127,
+            "offset": 0.0,
+            "rawJoint": 3,
+            "retargetJoint": "l-j4",
+            "sign": -1
+        },
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 2.099999904632568,
+            "min": -6.283199787139893,
+            "offset": -90.0,
+            "rawJoint": 4,
+            "retargetJoint": "l-j5",
+            "sign": 1
+        },
+        {
+            "max": 1.8324999809265137,
+            "maxSpeed": 2.099999904632568,
+            "min": -1.8324999809265137,
+            "offset": 0.0,
+            "rawJoint": 5,
+            "retargetJoint": "l-j6",
+            "sign": 1
+        },
+        {
+            "max": 1.100000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": -45.0,
+            "rawJoint": 32,
+            "retargetJoint": "L_thumb_MCP_joint1",
+            "sign": 1
+        },
+        {
+            "max": 1.0,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 34,
+            "retargetJoint": "L_thumb_PIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.2000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 35,
+            "retargetJoint": "L_thumb_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 36,
+            "retargetJoint": "L_index_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 37,
+            "retargetJoint": "L_index_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 39,
+            "retargetJoint": "L_middle_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 40,
+            "retargetJoint": "L_middle_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 42,
+            "retargetJoint": "L_ring_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 43,
+            "retargetJoint": "L_ring_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.7000000476837158,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 45,
+            "retargetJoint": "L_pinky_MCP_joint",
+            "sign": 1
+        },
+        {
+            "max": 1.600000023841858,
+            "maxSpeed": 5.099999904632568,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 46,
+            "retargetJoint": "L_pinky_DIP_joint",
+            "sign": 1
+        },
+        {
+            "max": 0.699999988079071,
+            "maxSpeed": 5.1,
+            "min": 0.0,
+            "offset": 45.0,
+            "rawJoint": 49,
+            "retargetJoint": "R_thumb_MCP_joint2",
+            "sign": 1
+        },
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 2.01592788696289,
+            "min": -6.283199787139893,
+            "offset": 90.0,
+            "rawJoint": 6,
+            "retargetJoint": "l-j7",
+            "sign": 1
+        },
+        {
+            "max": 0.5,
+            "maxSpeed": 5.1,
+            "min": 0.0,
+            "offset": 0.0,
+            "rawJoint": 33,
+            "retargetJoint": "L_thumb_MCP_joint2",
+            "sign": 1
+        },
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 2.01592788696289,
+            "min": -6.283199787139893,
+            "offset": -90.0,
+            "rawJoint": 13,
+            "retargetJoint": "r-j7",
+            "sign": -1
+        },
+        {
+            "max": 1.8324999809265137,
+            "maxSpeed": 5.1,
+            "min": -1.8324999809265137,
+            "offset": -90.0,
+            "rawJoint": 8,
+            "retargetJoint": "r-j2",
+            "sign": -1
+        },
+        {
+            "max": 6.283199787139893,
+            "maxSpeed": 5.1,
+            "min": -6.283199787139893,
+            "offset": 0.0,
+            "rawJoint": 7,
+            "retargetJoint": "r-j1",
+            "sign": 1
+        }
+    ],
+    "shoulderAngle": 0.0,
+    "shoulderOrder": {
+        "axis1": 1,
+        "axis2": 0,
+        "axis3": 2
+    },
+    "spineOrder": {
+        "axis1": 2,
+        "axis2": 0,
+        "axis3": 1
+    },
+    "upperLegLength": 0.0,
+    "urdfJointNames": [
+        "r-j1",
+        "r-j2",
+        "r-j3",
+        "r-j4",
+        "r-j5",
+        "r-j6",
+        "r-j7",
+        "L_thumb_MCP_joint1",
+        "L_thumb_MCP_joint2",
+        "L_thumb_PIP_joint",
+        "L_thumb_DIP_joint",
+        "L_index_MCP_joint",
+        "L_index_DIP_joint",
+        "L_middle_MCP_joint",
+        "L_middle_DIP_joint",
+        "L_ring_MCP_joint",
+        "L_ring_DIP_joint",
+        "L_pinky_MCP_joint",
+        "L_pinky_DIP_joint",
+        "l-j1",
+        "l-j2",
+        "l-j3",
+        "l-j4",
+        "l-j5",
+        "l-j6",
+        "l-j7",
+        "R_thumb_MCP_joint1",
+        "R_thumb_MCP_joint2",
+        "R_thumb_PIP_joint",
+        "R_thumb_DIP_joint",
+        "R_index_MCP_joint",
+        "R_index_DIP_joint",
+        "R_middle_MCP_joint",
+        "R_middle_DIP_joint",
+        "R_ring_MCP_joint",
+        "R_ring_DIP_joint",
+        "R_pinky_MCP_joint",
+        "R_pinky_DIP_joint"
+    ],
+    "useAngleLimit": true,
+    "useSpeedLimit": true,
+    "wristOrder": {
+        "axis1": 1,
+        "axis2": 0,
+        "axis3": 1
+    }
+}
