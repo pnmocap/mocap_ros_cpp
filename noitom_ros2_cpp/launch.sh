@@ -1,9 +1,9 @@
 #!/bin/bash
-# 检查文件是否存在
+# check the file exists
 if [ -f "./build/noitom_ros2_cpp/noitom_ros2_cpp" ]; then 
-	echo "文件存在，正在执行..." 
+	echo "The file exists. Execution is in progress..." 
 	./build/noitom_ros2_cpp/noitom_ros2_cpp 
 else 
-	echo "错误：文件 ./build/noitom_ros2_cpp/noitom_ros2_cpp 不存在。" 
+	echo "Error: File ./build/noitom_ros2_cpp/noitom_ros2_cpp not exists" 
 	exit 1 
 fi

@@ -12,19 +12,12 @@
 
 using namespace MocapApi;
 using json = nlohmann::json;
-// 服务IP地址
 std::string strServerIP = "127.0.0.1";
-// 服务端口号
 uint32_t strServerPort = 7001;
-// 本机的UDP端口号
 uint32_t localPort = 7012;
-/// 输出到文件的buffer
 bool bPrint2Buffer = false;
-// 输出缓冲区长度
 size_t nBufferLen = 1024 * 200 * 1024;
-// 输出缓冲区首地址
 char* logBuffer = nullptr;
-// 输出缓冲区首偏移
 int logOffset = 0;
 
 #define PrintInfo(format, ...)                                           \
@@ -46,8 +39,8 @@ void logQuit() {
 }
 
 /*
- *@brief:                           时间戳转日期
- *@param: uint64_t timestamp        接口接收到的时间戳
+ *@brief:                           Convert timestamp to date.
+ *@param: uint64_t timestamp        timestamp
  *@return: void
  *@remark:
  */
@@ -66,7 +59,7 @@ void printTimestamp(uint64_t timestamp) {
 void publish_joint_state();
 
 /*
- *@brief:                           printTimestamp升级版
+ *@brief:                           printTimestamp extension
  */
 void printTimestampEx(uint64_t timestamp, const char* type, int32_t count) {
   auto tp = std::chrono::time_point<std::chrono::system_clock,
@@ -144,61 +137,61 @@ const char* tagnames[] = {"JointTag_Hips",
                           "JointTag_LeftHandPinky3",
                           "JointTag_JointsCount"};
 
-// 全局变量
+// global variables
 rclcpp::Publisher<sensor_msgs::msg::JointState>::SharedPtr publisher_;
 std::vector<std::string> joint_names_;
 
-// 全局错误码
+// global error
 EMCPError error = EMCPError::Error_None;
-// 全局定义App接口及句柄
+// globalApp handle
 IMCPApplication* pGlobalApp = nullptr;
 MCPApplicationHandle_t globalAppHandle = 0;
-// 全局定义设置接口及句柄
+// globalSetting handle
 IMCPSettings* pGlobalSetting = nullptr;
 MCPSettingsHandle_t globalSettingHandle = 0;
 // #ifdef _SUPORT_ALICE_NEW_
-// Alice 数据分发
+// Alice databus
 IMCPAliceHub* pAliceDataHub = nullptr;
 MCPAliceBusHandle_t aliceBusHandle = 0;
 // #endif
-// 人物接收接口及句柄
+// avatar handle
 IMCPAvatar* pAvatarInterface = nullptr;
 MCPAvatarHandle_t avatarHandle = 0;
-// Device接收接口及句柄
+// Device handle
 IMCPTracker* pDeviceInterface = nullptr;
 MCPTrackerHandle_t deviceHandle = 0;
-// IMU接收接口及句柄
+// IMU
 IMCPSensorModule* pImuInterface = nullptr;
 MCPSensorModuleHandle_t imuHandle = 0;
 // #ifdef _SUPORT_ALICE_NEW_
-// Marker接收接口及句柄
+// Marker
 IMCPMarker* pMarkerInterface = nullptr;
 MCPMarkerHandle_t markerHandle = 0;
 // #endif
-// 刚体接收接口及句柄
+// rigidbody
 IMCPRigidBody* pRigidbodyInterface = nullptr;
 MCPRigidBodyHandle_t rigidbodyHandle = 0;
 // #ifdef _SUPORT_ALICE_NEW_
-// Tracker/PWR接收接口及句柄
+// Tracker/PWR
 IMCPPWR* pPWRInterface = nullptr;
 MCPPWRHandle_t pwrHandle = 0;
 // #endif
-// 渲染相关的接口及句柄
+// RenderSetting
 IMCPRenderSettings* pRenderSetting = nullptr;
 MCPRenderSettingsHandle_t renderSettingHandle = 0;
 
-// 最多事件数量
+// MaxEventCount
 static constexpr uint32_t nMaxEventCount = 16;
-// 接收事件
+// events
 MCPEvent_t pEvents[nMaxEventCount] = {};
-// 当前批次事件数量
+// EventCount
 uint32_t nEventCount = 0;
-// 人物关节句柄
+// joint
 MCPJointHandle_t joint = 0;
-// 全身关节句柄
+// all joint
 MCPJointHandle_t alljoint[59] = {};
 
-// 机器人接口
+// robotInterface
 IMCPRobot* robotInterface = nullptr;
 
 MCPRobotHandle_t pHandle = 0;
@@ -219,21 +212,20 @@ int setMCPSettings(IMCPSettings* setting, MCPSettingsHandle_t handle) {
 }
 
 void setup() {
-  // 创建并初始化全局App接口
+  // globalApp
   error = MCPGetGenericInterface(IMCPApplication_Version,
                                  reinterpret_cast<void**>(&pGlobalApp));
   error = pGlobalApp->CreateApplication(&globalAppHandle);
-  // 创建并初始化全局设置接口
+  // Settings
   MocapApi::MCPGetGenericInterface(IMCPSettings_Version,
                                    reinterpret_cast<void**>(&pGlobalSetting));
   pGlobalSetting->CreateSettings(&globalSettingHandle);
   int result = setMCPSettings(pGlobalSetting, globalSettingHandle);
-  // 激活设置并销毁不再需要的设置
   error =
       pGlobalApp->SetApplicationSettings(globalSettingHandle, globalAppHandle);
   error = pGlobalSetting->DestroySettings(globalSettingHandle);
 
-  // 添加各种数据接收接口的关联
+  // avatar, sensormodule
   error = MCPGetGenericInterface(IMCPAvatar_Version,
                                  reinterpret_cast<void**>(&pAvatarInterface));
   error = MCPGetGenericInterface(IMCPSensorModule_Version,
@@ -245,7 +237,7 @@ void setup() {
   error = MCPGetGenericInterface(
       IMCPRigidBody_Version,
       reinterpret_cast<void**>(
-          &pRigidbodyInterface));  // 注意这里选的是Rigidbody协议2
+          &pRigidbodyInterface));  // PS: Rigidbody v2
   // #ifdef _SUPORT_ALICE_NEW_
   error = MCPGetGenericInterface(IMCPPWR_Version,
                                  reinterpret_cast<void**>(&pPWRInterface));
@@ -259,7 +251,7 @@ void setup() {
     pEvents[i].size = sizeof(MCPEvent_t);
   }
 
-  // 创建并初始化渲染相关的接口
+  // RenderSetting
   error = MCPGetGenericInterface(IMCPRenderSettings_Version,
                                  reinterpret_cast<void**>(&pRenderSetting));
   pRenderSetting->GetPreDefRenderSettings(PreDefinedRenderSettings_Default,
@@ -295,7 +287,7 @@ void updateJoints(MCPJointHandle_t joint, MCPAvatarHandle_t avatar) {
     error = jointMgr->GetJointLocalRotation(&r[0], &r[1], &r[2], &r[3], joint);
     error = jointMgr->GetJointLocalPosition(&p[0], &p[1], &p[2], joint);
     if (error !=
-        Error_None)  // 这里用来规避勾选“不带位移”后仍调用该接口所产生的野值
+        Error_None)  // This is used to avoid the wild values generated when the interface is still called after checking the "No displacement" option.
     {
       p[0] = p[1] = p[2] = 0;
     }
@@ -326,8 +318,7 @@ void updateJoints(MCPJointHandle_t joint, MCPAvatarHandle_t avatar) {
   }
   return;
 }
-// 函数声明
-// 读取 JSON 文件
+// read JSON file
 json readJsonFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file.is_open()) {
@@ -358,28 +349,27 @@ int main(int argc, char** argv) {
   printf("local port: %d\n", localPort);
   setup();
 
-  // 免得每次都要构造和析构，提前定义一点变量
  
 
-  // 根据版本获取机器人接口
+  // Robot
   MCPGetGenericInterface(IMCPRobot_Version, (void**)&robotInterface);
   
-  // 读取 retarget.json 文件
+  // read retarget.json file
   json retarget = readJsonFile("retarget.json");
 
   if (retarget.is_null() || retarget.empty()) {
         std::cerr << "retarget.json is empty or invalid, please check." << std::endl;
     }
-  // 创建一个机器人
+  // create a robot
   if (robotInterface) {
         std::string retarget_str = retarget.dump(); 
         robotInterface->CreateRobot(retarget_str.c_str(), &pHandle);
         robotInterface->SetRobotFPS(100, pHandle); // 设置 FPS
     }
   int fps = 100;
-  // 输入数据帧数
+  // set fps
   robotInterface->SetRobotFPS(fps, pHandle);
-  // 确保从 JSON 中正确获取关节名称列表
+  // Ensure that the list of joint names is correctly obtained from the JSON.
   if (!retarget["urdfJointNames"].is_null() && retarget["urdfJointNames"].is_array()) {
       for (const auto& joint_name : retarget["urdfJointNames"]) {
           if (joint_name.is_string()) {
@@ -416,11 +406,11 @@ void publish_joint_state(){
     int32_t indexes[1024];
     float pos[3], acce[3], gyro[3], quat[4], axisAngle[4];
 
-    time_t now = time(0);      // 当前系统时间精确到秒
-    tm* gm = localtime(&now);  // 转为gmt时间
-    time_t utc = mktime(gm);   // gmt对应的时间戳
+    time_t now = time(0);      // The current system time accurate to the second.
+    tm* gm = localtime(&now);  // gmt time
+    time_t utc = mktime(gm);   // gmt timestamp
 
-    int64_t time = utc - now;  // 秒级时区转化
+    int64_t time = utc - now;  // Second-level time zone conversion.
     uint64_t baseTime = time * 1e3;
 
     error = pGlobalApp->PollApplicationNextEvent(nullptr, &nEventCount,
@@ -448,11 +438,11 @@ void publish_joint_state(){
             updateJoints(jointHandle, avatarHandle);
           }
 
-          // 每帧获取机器人的关节数据
+          // Acquire the robot's joint data for each frame.
           robotInterface->UpdateRobot(avatarHandle, pHandle);
           float p[3];  // xyz [14/01/2025 brian.wang]
           float r[4];  // xyzw [14/01/2025 brian.wang]
-          // root节点数据
+          // root data
           robotInterface->GetRobotRootPosition(&p[0], &p[1], &p[2], pHandle);
           robotInterface->GetRobotRootRotation(&r[0], &r[1], &r[2], &r[3],
                                                pHandle);
@@ -460,13 +450,13 @@ void publish_joint_state(){
           //PrintInfo("RobotRoot: pos:(%f, %f, %f)   quat(%f, %f, %f, %f)\n",
           //        p[0], p[1], p[2], r[3], r[0], r[1], r[2]);
 
-          // jointName为此retarget的具体关节节点，可根据需求输入，调用后返回一个角度。
+          // jointName is the specific joint node of this retargeting. It can be input according to requirements, and an angle will be returned after the call.
           const char* jointName = "r-j1";
           float value = 0;
           robotInterface->GetRobotRetargetJointAngle(jointName, &value,
                                                      pHandle);
           //PrintInfo("RobotjointName:%s :%f  \n", jointName, value);
-          // 获取jsonStr
+          // jsonStr
           bool compress = true;
           const char* result;
 	  sensor_msgs::msg::JointState joint_state_msg;
@@ -503,15 +493,15 @@ void publish_joint_state(){
         // #ifdef _SUPORT_ALICE_NEW_
         else if (pEvents[i].eventType == MCPEvent_AliceMarkerUpdated) {
           pAliceDataHub->GetMarkerList(
-              nullptr, &count);  // 第一次传入参1为nullptr，意为获取对象的数量
+              nullptr, &count);  // When passing parameters for the first time, set the first parameter as nullptr, which means to obtain the number of objects.
           if (count > 0) {
             MCPMarkerHandle_t* recv =
-                new MCPMarkerHandle_t[count];  // 动态开辟接收内存
+                new MCPMarkerHandle_t[count];  // new memory
             pAliceDataHub->GetMarkerList(
                 recv,
-                &count);  // 第二次传入参1不为nullptr，将接收实际的handle列表
+                &count);  // The second time you pass the parameters, if the first parameter is not nullptr, it will receive the actual handle list.
             pAliceDataHub->GetMarkerTimestamp(
-                &timestamp);  // 以包为单位的时间戳
+                &timestamp);  // Timestamp per packet.
 
             printTimestampEx(timestamp, "Marker", count);
             for (size_t i = 0; i < count; ++i) {
@@ -524,7 +514,7 @@ void publish_joint_state(){
             recv = nullptr;
           }
         } else if (pEvents[i].eventType == MCPEvent_AliceIMUUpdated) {
-          // 详见 MCPEvent_AliceMarkerUpdated 类型事件接收的注释
+          // Please refer to the comments for receiving events of type MCPEvent_AliceMarkerUpdated for details.
           pAliceDataHub->GetSensorModuleList(nullptr, &count);
           if (count > 0) {
             MCPSensorModuleHandle_t* recv = new MCPSensorModuleHandle_t[count];
@@ -551,7 +541,7 @@ void publish_joint_state(){
             recv = nullptr;
           }
         } else if (pEvents[i].eventType == MCPEvent_AliceRigidbodyUpdated) {
-          // 详见 MCPEvent_AliceMarkerUpdated 类型事件接收的注释
+          // For details, please refer to the comments regarding the reception of events of type MCPEvent_AliceMarkerUpdated.
           pAliceDataHub->GetRigidBodyList(nullptr, &count);
           if (count > 0) {
             MCPRigidBodyHandle_t* recv = new MCPRigidBodyHandle_t[count];
@@ -579,7 +569,7 @@ void publish_joint_state(){
             recv = nullptr;
           }
         } else if (pEvents[i].eventType == MCPEvent_AliceTrackerUpdated) {
-          // 详见 MCPEvent_AliceMarkerUpdated 类型事件接收的注释
+          // Refer to the comments on receiving events of type MCPEvent_AliceMarkerUpdated for detailed information.
           pAliceDataHub->GetPWRList(nullptr, &count);
           if (count > 0) {
             MCPPWRHandle_t* recv = new MCPPWRHandle_t[count];
@@ -619,7 +609,7 @@ void publish_joint_state(){
            //                 .count() +
             //            baseTime);
           for (int i = 0; i < count; ++i) {
-            const char* name;  // 这里无需开辟内存
+            const char* name;  // no need to new memory
             pDeviceInterface->GetDeviceName(i, &name, deviceHandle);
             pDeviceInterface->GetTrackerPosition(&pos[0], &pos[1], &pos[2],
                                                  name, deviceHandle);
