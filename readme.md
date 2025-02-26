@@ -1,104 +1,106 @@
 
-# 介绍
+# Introduction
 
-本工程是基于C++实现的ROS节点程序，实现下列功能：
+This project is a ROS node program implemented in C++, which achieves the following functions:
 
-1. 首先，从Noitom动捕软件获取人体动作数据（BVH格式）
+1. First, obtain human motion data (in BVH format) from the Noitom Mocap Software.
 
-2. 然后，将BVH数据转换成对应机器人关节模型的数据，该步骤称之为Retargeting
+2. Then, convert the BVH data into data corresponding to the robot joint model. This step is called Retargeting.
 
-   > 目前支持宇树科技的H1模型机器人的retargeting
+   > Currently, retargeting for the H1 model robot of Unitree Technology is supported.
 
-3. 最后，再把转换后的数据发送给仿真模拟器节点，用于驱动机器人模型。
+3. Finally, send the converted data to the simulation emulator node to drive the robot model.
 
-结合仿真模拟器节点的工程，可以实现从Noitom公司提供的动捕软件获取数据并驱动机器人的功能。
+   > In addition to driving the robot model, it can also drive a TF model (stickman has the same skeletal structure as a real human).
 
-下图展示了各个节点的数据流：
+When combined with the project of the simulation emulator node, it can achieve the function of obtaining data from the Noitom Mocap Software and using it to drive the robot.
+
+The following figure shows the data flow of each node:
 
 ![nodes_arch](img/nodes_arch.png)
 
-- **Noitom Mocap Software**：Noitom公司提供专业的动捕软件（如Axis Studio，Hybrid Data Server等），负责提供基于真实人体的动捕数据
+- **Noitom Mocap Software**: Noitom Company provides professional motion capture software (such as Axis Studio, Hybrid Data Server, etc.), which is responsible for providing motion capture data based on real human bodies.
 
-  > 请联系info@noitom.com获取
+  > please contact info@noitom.com
 
-- **mocap_ros_py**：基于python实现的ROS节点程序，从动捕软件获取数据，retargeting后发送给仿真器。
+- **mocap_ros_py**:  A ROS node program implemented in Python. It retrieves data from the Noitom Mocap Software. After retargeting, it sends the data to the simulator to drive the robot model. Alternatively, it can directly send the BVH data to drive the TF model(stickman). 
 
-  > 工程源码：https://github.com/pnmocap/mocap_ros_py.git
+  > source code: https://github.com/pnmocap/mocap_ros_py.git
 
-- **mocap_ros_cpp**：本工程，功能同mocap_ros_py，基于cpp实现。
+- **mocap_ros_cpp**: This project. It has the same function as mocap_ros_py, but it is implemented in C++. 
 
-  > 工程源码：https://github.com/pnmocap/mocap_ros_cpp.git
+  > source code: https://github.com/pnmocap/mocap_ros_cpp.git
 
-- **mocap_ros_urdf**：机器人仿真模拟器节点工程，监听来自mocap_ros_py或mocap_ros_urdf的数据，驱动机器人
+- **mocap_ros_urdf**: A robot simulation emulator, listens to the data from mocap_ros_py or mocap_ros_urdf and drives the robot.
 
-  > 工程源码：https://github.com/pnmocap/mocap_ros_cpp.git
+  > source code:  https://github.com/pnmocap/mocap_ros_urdf.git
 
 
 
-# 目录结构
+# File Structure
 
-| 条目            | 说明                                                         |
+| Item            | Description                                                         |
 | --------------- | ------------------------------------------------------------ |
-| lib/            | 包含了针对各个CPU架构的librobotapi动态库文件，它提供了接口函数，从Axis Studio获取动捕数据，同时也封装了从BVH数据转换为URDF格式的功能。 |
-| img/            | 包含了本说明文档中用到的图片                                 |
-| unitree_h1/     | 存放针对宇树科技H1模型的regarting配置文件                    |
-| noitom_ros1_cpp/| 针对ROS1环境的节点工程源码                                   |
-| noitom_ros2_cpp/| 针对ROS2环境的节点工程源码                                   |
-| README.md       | 本说明文档                                                   |
-| README_en.md    | 英文版说明文档                                                   |
+| lib/            | It includes the `librobotapi` dynamic library files for various CPU architectures. This library provides interface functions to obtain motion capture data from Axis Studio and also encapsulates the functionality of converting BVH data to the URDF format.  |
+| img/            | It contains the images used in this instruction document.                                 |
+| unitree_h1/     | It stores the retargeting configuration files for the Unitree Technology H1 model. |
+| noitom_ros1_cpp/| Source code of the node project for the ROS1 |
+| noitom_ros2_cpp/| Source code of the node project for the ROS2 |
+| README.md       | Readme in Chinese                                            |
+| README_en.md    | Readme in English                                            |
 
-# 启动步骤
+# Launch Steps
 
-## 前提
+## Prerequisites
 
-- 首先找一台windows PC，安装好Axis Studio软件，并做好配置。
-- 其次找一台linux PC，安装好ROS环境。（ROS1或ROS2都可以）
-- 根据ROS1还是ROS2环境，启动对应的仿真模拟器节点，详见： [mocap_ros_urdf](https://github.com/pnmocap/mocap_ros_urdf.git)
-- 根据ROS1还是ROS2环境，启动对应的ROS node
+- First, find a Windows PC, install the Axis Studio software, and complete the configuration.
+- Second, find a Linux PC and install the ROS environment. (Either ROS 1 or ROS 2 is acceptable.)
+- Depending on whether it is a ROS 1 or ROS 2 environment, start the corresponding simulation emulator node. For details, refer to: [mocap_ros_urdf](https://github.com/pnmocap/mocap_ros_urdf.git).
+- Depending on whether it is a ROS 1 or ROS 2 environment, start the corresponding ROS node.
 
-## 下载本工程
+## Download This Project
 
-登录安装了ROS的linux PC，下载本工程
+Log in to the Linux PC with ROS installed, download this project.
 
 ~~~
 git clone https://github.com/pnmocap/mocap_ros_cpp.git
 ~~~
 
 
-## 配置动捕软件Axis Studio
+## Configure the Motion Capture Software: Axis Studio
 
-最新一代的动作捕捉软件支持 Perception Neuron Studio 和 Perception Neuron3（Pro）动作捕捉产品。点击下方的 “[下载](https://shopcdn.noitom.com.cn/software/9d68e93a50424cac8fbc6d6c9e5bd3da/Axis_Studio_nacs_x64_2_12_13808_2521_20241209183103543.zip)” 按钮，获取软件安装包程序。
+The latest generation of motion capture software supports the Perception Neuron Studio and Perception Neuron3 (Pro) motion capture products. Click the "[Download](https://shopcdn.noitom.com.cn/software/9d68e93a50424cac8fbc6d6c9e5bd3da/Axis_Studio_nacs_x64_2_12_13808_2521_20241209183103543.zip)" button below to obtain the software installation package.
 
-### 启动*Axis Studio*, 打开一个动作数据文件
+### Start *Axis Studio* and Open a Motion Data File
 
-此时能看到Axis Studio里的3D模型在运动，如下图所示：
+At this point, you can see the 3D model in Axis Studio moving, as shown in the following figure:
 
-   ![launch_axis_studio](img/launch_axis_studio.gif)
+   [![img](img/launch_axis_studio.gif)](img/launch_axis_studio.gif)
 
-### 配置 *BVH Broadcasting*
+### Configure *BVH Broadcasting*
 
-打开设置对话框，选择BVH Broadcasting并使能：
+Open the settings dialog box, select BVH Broadcasting and enable it:
 
-其中Local Address填写运行Axis Studio软件的windows电脑IP，Destination Address填写运行ROS节点的Linux电脑IP。注意需要填写局域网IP，不要填写127.0.0.1这种回环IP。
+Fill in the "Local Address" with the IP address of the Windows computer running the Axis Studio software, and fill in the "Destination Address" with the IP address of the Linux computer running the ROS node. Note that you need to fill in the local area network IP address, not a loopback IP like 127.0.0.1.
 
-其余红框部分，需要严格按照图示填写。
+For the rest of the parts within the red frame, you need to fill them in strictly as shown in the figure.
 
-![bvh_edit](img/bvh_edit.png)
+![1740031721398](img/bvh_edit.png)
 
 
-##  启动并配置仿真模拟器节点
+## Start and Configure the Simulation Emulator Node
 
-这里的ROS URDF模型使用的是宇树科技的H1机器人模型。
+The ROS URDF model used here is the H1 robot model from Unitree Technology.
 
-请按照文档描述，启动并配置好仿真模拟器节点程序： https://github.com/pnmocap/mocap_ros_urdf.git。
+Please follow the description in the documentation to start and configure the simulation emulator node program: https://github.com/pnmocap/mocap_ros_urdf.git.
 
-> 设置为RobotModel方式
+> set to RobotModel
 
-## 启动本ROS节点程序
+## Start This ROS Node Program
 
-前提：登录ubuntu系统（g++编译环境），将文件复制到目录下
+precondition：Log in to the Linux PC with ROS installed and g++ environment installed
 
-- 安装 `nlohmann_json` 库 
+- install `nlohmann_json` 
 
 ~~~
 sudo apt-get update
@@ -107,9 +109,9 @@ sudo apt-get install nlohmann-json3-dev
 
 ### ROS1
 
-1. 家目录下创建工作空间catkin_noitom
+1. Create a workspace named `catkin_noitom` in the home directory.
 
-> 下列指令只需执行一次
+> The following commands only need to be executed once.
 
 ~~~
 mkdir -p ~/catkin_noitom/src   
@@ -120,7 +122,7 @@ catkin_create_pkg noitom_ros1_cpp
 mv  noitom_ros1_cpp  ~/catkin_noitom/src/
 ~~~
 
-2. 将对应urdf的retarget.json文件和操作系统对应的so文件copy到noitom_ros1_cpp工作空间
+2. Copy the retarget.json file corresponding to the URDF and the .so file corresponding to the operating system to the noitom_ros1_cpp workspace.
 
 ~~~
 cp -r unitree_h1/retarget.json ~/catkin_noitom/src/noitom_ros1_cpp/retarget.json
@@ -130,7 +132,7 @@ or
 cp -r librobotapi_arm64.so  ~/catkin_noitom/src/noitom_ros1_cpp/libMocapApi.so
 ~~~
 
-3. 运行CMake
+3. CMake
 
 ```sh
 cd  ~/catkin_noitom
@@ -138,7 +140,7 @@ catkin_make
 source devel/setup.bash
 ```
 
-4. 编译好ROS包后，使用以下命令运行节点
+4. launch the node
 
 ~~~
 cd  ~/catkin_noitom/src/noitom_ros1_cpp/
@@ -148,7 +150,7 @@ chmod +x launch.sh
 
 ### ROS2
 
-1. 将对应urdf的  retarget.json  文件和操作系统对应的so文件copy到noitom_ros2_cpp 工作空间
+1. Copy the retarget.json file corresponding to the URDF and the .so file corresponding to the operating system to the noitom_ros1_cpp workspace.
 
 ~~~
 cp -r unitree_h1/retarget.json noitom_ros2_cpp/retarget.json
@@ -158,7 +160,7 @@ or
 cp -r librobotapi_arm64.so noitom_ros2_cpp/libMocapApi.so
 ~~~
 
-2. 运行 colcon build
+2. colcon build
 
 ~~~
 cd noitom_ros2_cpp
@@ -166,7 +168,7 @@ colcon build
 source install/setup.bash
 ~~~
 
-3. 编译好ROS包后，使用以下命令运行节点
+3. launch the node
 
 ~~~
 cd noitom_ros2_cpp
@@ -174,4 +176,4 @@ chmod +x launch.sh
 ./launch.sh
 ~~~
 
-仿真模拟器中的机器人模型将跟着axis studio里的模型运动
+The robot model in the simulation emulator will move following the model in Axis Studio.
