@@ -67,7 +67,7 @@ git clone https://github.com/pnmocap/mocap_ros_cpp.git
 
 ## 配置动捕软件Axis Studio
 
-最新一代的动作捕捉软件支持 Perception Neuron Studio 和 Perception Neuron3（Pro）动作捕捉产品。点击下方的 “[下载](https://shopcdn.noitom.com.cn/software/9d68e93a50424cac8fbc6d6c9e5bd3da/Axis_Studio_nacs_x64_2_12_13808_2521_20241209183103543.zip)” 按钮，获取软件安装包程序。
+最新一代的动作捕捉软件支持 Perception Neuron Studio 和 Perception Neuron3（Pro）动作捕捉产品。请访问公司官网获取下载地址。
 
 ### 启动*Axis Studio*, 打开一个动作数据文件
 
